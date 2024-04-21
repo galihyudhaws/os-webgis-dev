@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- script untuk memanggil library css dari leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <title>Leaflet Geoproject</title>
+    <!-- script untuk mengatur tinggi dan lebar peta dengan id = "map" -->
+    <style>
+        #map {
+            width: 100%;
+            height: 700px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- membuat element div dengan id = "map" -->
+    <div id="map"></div>
+    <!-- membuat tombol untuk tampilan peta full screen saat diklik mouse -->
+    <button onclick=fullScreenView()>View in full screen</button>
+    <!-- membuat element div dengan class ="coordinate" untuk kebutuhan tampilan koordinat -->
+    <div class="coordinate"></div>
+</body>
+</html>
+
+<!-- script search dari link eksternal untuk memanggil library leaflet js -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<!-- script search dari link eksternal untuk memanggil jquery cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- script untuk inisiasi, tile, marker, skala, full screen dll. -->
+<script>
+    // map class initialize
+    var map = L.map('map').setView([-6.1944, 106.8229], 19);
+
+    // adding osm tilelayer
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom:3 ,maxZoom:21
+    }).addTo(map);
+
+    // adding marker in the center of the map
+    L.marker([-6.1944, 106.8229]).addTo(map)
+        .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+        .openPopup();
+
+    // add map scale
+    L.control.scale().addTo(map);
+    // L.control.scale({position:'bottomright'}).addTo(map);
+
+    // Full screen map view
+    var mapId = document.getElementById('map');
+    function fullScreenView(){
+        mapId.requestFullscreen();
+    }
+
+    // Map Coordinate Display
+    map.on('mousemove',function(e){
+        console.log(e)
+        $('.coordinate').html(`Lat : ${e.latlng.lat} Lng : ${e.latlng.lng}`)
+    })
+</script>
