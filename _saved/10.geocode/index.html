@@ -46,7 +46,7 @@
 <script src="./lib/leaflet.measure.js"></script>
 
 <!-- script untuk memanggil data geojson -->
-<script src="./data/spbu_v2.js"></script>
+<!-- <script src="./data/spbu_v2.js"></script> -->
 <script src="./data/bocimi.js"></script>
 
 <!-- script untuk memanggil library markercluster.js -->
@@ -66,25 +66,9 @@
     map.zoomControl.setPosition('topright');
 
     // adding osm tilelayer
-    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', 
-        minZoom:3 ,
-        maxZoom:21
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom:3 ,maxZoom:21
     }).addTo(map);
-
-    // adding other map tile layer
-    var stadiaMapImagery = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}', {
-        minZoom: 0,
-        maxZoom: 20,
-        attribution: '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        ext: 'jpg'
-    });
-    
-    var esriWorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-        minZoom:3,
-        maxZoom:18
-    });
 
 
     // adding marker in the center of the map
@@ -137,49 +121,28 @@
     // Geojson load
     // L.geoJSON(data).addTo(map);
 
-    // Geojson cluster load and popup CL Bocimi Toll Road
+    // Geojson cluster load only
+    // var marker = L.markerClusterGroup();
+    // var sebaranSpbu = L.geoJSON(data);
+    // sebaranSpbu.addTo(marker);
+    // marker.addTo(map);
+
+    // Geojson cluster load  with popup
     var marker = L.markerClusterGroup();
-    var clBocimi = L.geoJSON(bocimi, {
+    var vector = L.geoJSON(bocimi, {
         onEachFeature: function (feature,layer) {
             // layer.bindPopup(feature.properties.namobj)
             // layer.bindPopup(feature.properties.name)
             layer.bindPopup('<h4>Link :</h4></h1><a href="https://ion.cesium.com/stories/viewer/?id=efdeba93-4f8a-4b64-8e36-9588a9f384da">3D Model</a>')
         }
     });
-    clBocimi.addTo(marker);
+    vector.addTo(marker);
     marker.addTo(map);
-
-    // Geojson cluster load  with popup SPBU DK Jakarta
-    var marker2 = L.markerClusterGroup();
-    var vector = L.geoJSON(spbu_v2, {
-        onEachFeature: function (feature,layer) {
-            layer.bindPopup(feature.properties.namobj)
-        }
-    });
-    vector.addTo(marker2);
-    marker2.addTo(map);
 
     // geocoder load
     $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=47.217954&lon=-1.552918', function(data){
     console.log(data.address.road);
     });
     L.Control.geocoder().addTo(map);
-
-    // leaflet layer control
-    var baseMaps = {
-        'Open Street Maps': osm,
-        'Stadia Map Imagery':stadiaMapImagery,
-        'Esri World Imagery': esriWorldImagery
-    }
-    var overlayerMaps = {
-        'Center Line Bocimi Toll Road': marker,
-        'Titik SPBU DK Jakarta': marker2
-    }
-    L.control.layers(baseMaps, overlayerMaps).addTo(map);
-
-    // zoom extent
-    var group = new L.featureGroup([marker, marker2]);
-    map.fitBounds(group.getBounds());
-
 
 </script>
