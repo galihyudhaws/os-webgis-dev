@@ -124,7 +124,8 @@
     var marker = L.markerClusterGroup();
     var sebaranSpbu = L.geoJSON(data, {
         onEachFeature: function (feature,layer) {
-            layer.bindPopup(feature.properties.namobj)
+            // layer.bindPopup(feature.properties.namobj)
+            layer.bindPopup(feature.properties.objectid)
         }
     });
     sebaranSpbu.addTo(marker);
