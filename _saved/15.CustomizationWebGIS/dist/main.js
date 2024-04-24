@@ -83,5 +83,5 @@ var overlayerMaps = {
     'Center Line Bocimi Toll Road': marker,
     'Titik SPBU DK Jakarta': marker2
 }
-L.control.layers(baseMaps, overlayerMaps, {collapsed: false, position: 'topleft'}).addTo(map);
+L.control.layers(baseMaps, overlayerMaps).addTo(map);
 

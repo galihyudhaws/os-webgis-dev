@@ -1,28 +1,24 @@
 // Full screen map view
 var mapId = document.getElementById('map');
 function fullScreenView(){
-    if(document.fullscreenElement){
-        document.exitFullscreen()
-    } else {
-        mapId.requestFullscreen()
-    }
+    mapId.requestFullscreen();
 }
 
 // script JQuery untuk map printing function
-// $('.print-map').click(function(){
-//     window.print();
-// })
+$('.print-map').click(function(){
+    window.print();
+})
 
-// script untuk memanggil fungsi map print dari plugin Leaflet browser print
-L.control.browserPrint({position: 'topright'}).addTo(map);
+// script untuk memanggil fungsi map print dari plugin browser print
+L.control.browserPrint().addTo(map);
 
-// script untuk mengaktifkan fungsi measure control dari Leaflet.Measure
-L.control.measure({position: 'bottomleft'}).addTo(map);
+// script untuk mengaktifkan fungsi measure control
+L.control.measure().addTo(map);
 
 // customize measure control unit and language
 L.Measure = {
 linearMeasurement: "Distance measurement",
-areaMeasurement: "Areaa measurement",
+areaMeasurement: "Area measurement",
 start: "Start",
 meter: "m",
 meterDecimals: 0,
