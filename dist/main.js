@@ -41,7 +41,7 @@ L.control.scale().addTo(map);
 // Map Coordinate Display
 map.on('mousemove',function(e){
     console.log(e)
-    $('.coordinate').html(`Lat : ${e.latlng.lat} Lng : ${e.latlng.lng}`)
+    $('.coordinate').html(`Lat : ${e.latlng.lat}, Lon : ${e.latlng.lng}`)
 })
 
 
