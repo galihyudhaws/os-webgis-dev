@@ -1,8 +1,6 @@
-.navbar { margin-bottom: 0 }
-
 #map {
     width: 100%;
-    height: calc(100vh - 59px);
+    height: 100vh;
 }
 
 .map-coordinate {
@@ -40,4 +38,3 @@
     top: 210px;
     cursor: pointer;
 }
-
